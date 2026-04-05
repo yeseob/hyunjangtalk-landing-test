@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title>가격안내 — 현장톡</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<script src="https://code.iconify.design/iconify-icon/2.3.0/iconify-icon.min.js"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        brand: { purple: '#7C3AED', teal: '#0891B2', dark: '#4C1D95', light: '#EDE9FE' },
+        surface: { DEFAULT: '#F8FAFC', card: '#FFFFFF' },
+        status: { success: '#10B981', warning: '#E5A221', danger: '#EF4444', info: '#6B8FD4' }
+      },
+      fontFamily: {
+        sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+        num: ['Inter', 'Pretendard', 'sans-serif']
+      }
+    }
+  }
+}
+</script>
+<style>
+  html { background-color: #fff; }
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(2rem); } to { opacity: 1; transform: translateY(0); } }
+  .fade-in { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+  .delay-1 { animation-delay: 100ms; } .delay-2 { animation-delay: 200ms; } .delay-3 { animation-delay: 300ms; }
+  .gradient-text { background: linear-gradient(135deg, #7C3AED, #0891B2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .btn-primary { background: linear-gradient(135deg, #7C3AED, #6D28D9); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+  .btn-primary:hover { transform: scale(1.02); box-shadow: 0 12px 40px rgba(124,58,237,0.3); }
+  .btn-primary:active { transform: scale(0.98); }
+  .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .grain::after {
+    content: ''; position: fixed; inset: 0; z-index: 60; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  }
+</style>
+<!-- Tracking Pixels (KR timezone only — blocks overseas spam traffic) -->
+<script>
+(function(){
+  if (location.hostname.indexOf('test.') === 0) return; // skip tracking on test site
+  if (location.search.indexOf('notrack') > -1) localStorage.setItem('_notrack', '1');
+  if (localStorage.getItem('_notrack')) return;
+  var isKR = Intl.DateTimeFormat().resolvedOptions().timeZone === 'Asia/Seoul';
+  if (!isKR) return;
+
+  // GA4
+  var ga = document.createElement('script');
+  ga.async = true;
+  ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-C38SXR3WQ3';
+  document.head.appendChild(ga);
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-C38SXR3WQ3');
+  gtag('config', 'AW-18055785683');
+  window.gtag = gtag;
+
+  // Meta Pixel
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
+  (window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1105078901805967');
+  fbq('track', 'PageView');
+
+  // Kakao Pixel
+  var kp = document.createElement('script');
+  kp.src = '//t1.daumcdn.net/kas/static/kp.js';
+  kp.onload = function(){ kakaoPixel('8295254996672491685').pageView(); };
+  document.head.appendChild(kp);
+})();
+</script>
+</head>
+<body class="font-sans text-slate-900 bg-white grain antialiased">
+
+<!-- ===== NAV ===== -->
+<nav class="fixed top-0 w-full bg-white/80 backdrop-blur-xl border-b border-slate-100" style="z-index:9999;padding-top:env(safe-area-inset-top,0px);">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <div class="flex items-center gap-2.5">
+      <a href="index.html" class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-brand-purple to-brand-teal flex items-center justify-center">
+          <span class="text-white text-xs font-bold">톡</span>
+        </div>
+        <span class="text-lg font-bold tracking-tight">현장톡</span>
+      </a>
+    </div>
+    <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
+      <a href="index.html#features" class="hover:text-slate-900 transition">기능</a>
+      <a href="index.html#how" class="hover:text-slate-900 transition">사용법</a>
+      <a href="pricing.html" class="text-brand-purple font-semibold transition">가격안내</a>
+    </div>
+    <div class="flex items-center gap-3">
+      <a href="#" class="hidden sm:block text-sm font-medium text-slate-600 hover:text-slate-900 transition">로그인</a>
+      <a href="#" onclick="openModal(); return false;" class="btn-primary px-5 py-2.5 rounded-xl text-sm font-semibold text-white">구매하기</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="pt-32 pb-16 text-center" style="padding-top:calc(8rem + env(safe-area-inset-top,0px));">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    <p class="fade-in inline-block text-sm font-semibold text-brand-purple bg-brand-light px-4 py-1.5 rounded-full mb-4">가격안내</p>
+    <h1 class="fade-in delay-1 text-4xl md:text-5xl font-bold tracking-tight break-keep">현장 수에 맞게 <span class="gradient-text">딱 맞는 플랜</span>을 선택하세요</h1>
+    <p class="fade-in delay-2 mt-5 text-lg text-slate-500 break-keep">사전등록 시 정식 출시 후 1개월 무료체험을 드립니다.</p>
+  </div>
+</section>
+
+<!-- ===== PRICING TABLE ===== -->
+<section class="pb-24">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto reveal">
+
+      <!-- 베이직 -->
+      <div class="border border-slate-100 rounded-2xl p-7 flex flex-col bg-white relative overflow-hidden">
+        <div class="absolute top-4 right-4 bg-emerald-100 text-emerald-700 text-[10px] font-bold px-2.5 py-1 rounded-full">사전등록 시 1개월 무료</div>
+        <div class="mb-6">
+          <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">베이직</p>
+          <div class="flex items-end gap-1">
+            <span class="text-4xl font-bold font-num">9,900</span>
+            <span class="text-slate-500 mb-1">원/월</span>
+          </div>
+          <p class="mt-1 text-xs text-slate-400">1~5개 현장을 운영하는 팀장님</p>
+        </div>
+        <ul class="space-y-3 flex-1 text-sm text-slate-600">
+          <li class="flex items-center gap-2.5">
+            <iconify-icon icon="solar:check-circle-bold" class="text-status-success text-base flex-shrink-0"></iconify-icon>
+            현장 등록 <span class="font-semibold text-slate-800">10개</span>
+          </li>
+          <li class="flex items-center gap-2.5">
+            <iconify-icon icon="solar:check-circle-bold" class="text-status-success text-base flex-shrink-0"></iconify-icon>
+            알림톡 발송 <span class="font-semibold text-slate-800">월 200건</span>
+          </li>
+          <li class="flex items-center gap-2.5">
+            <iconify-icon icon="solar:check-circle-bold" class="text-status-success text-base flex-shrink-0"></iconify-icon>
+            수금 현황 대시보드
+          </li>
+          <li class="flex items-center gap-2.5">
+            <iconify-icon icon="solar:check-circle-bold" class="text-status-success text-base flex-shrink-0"></iconify-icon>
+            견적서·전자계약
+          </li>
+          <li class="flex items-center gap-2.5">
+            <iconify-icon icon="solar:check-circle-bold" class="text-status-success text-base flex-shrink-0"></iconify-icon>
+            증빙 저장 <span class="font-semibold text-slate-800">5GB</span>
+          </li>
+          <li class="flex items-center gap-2.5 text-slate-300">
+            <iconify-icon icon="solar:close-circle-bold" class="text-base flex-shrink-0"></iconify-icon>
+            지출 관리
+          </li>
+        </ul>
+        <button onclick="openModal('베이직')" class="mt-8 w-full py-3.5 rounded-xl border-2 border-brand-purple text-brand-purple font-semibold text-sm hover:bg-brand-light transition">사전등록 (1개월 무료)</button>
+      </div>
+
+      <!-- 프로 (추천) -->
+      <div class="rounded-2xl p-7 flex flex-col relative overflow-hidden" style="background: linear-gradient(135deg, #7C3AED, #0891B2);">
+        <div class="absolute top-4 right-4 flex gap-1.5">
+          <span class="bg-white/90 text-emerald-700 text-[10px] font-bold px-2.5 py-1 rounded-full">1개월 무료</span>
+          <span class="bg-white/20 text-white text-[10px] font-bold px-2.5 py-1 rounded-full">추천</span>
+        </div>
+        <div class="mb-6">
+          <p class="text-xs font-semibold text-white/70 uppercase tracking-wider mb-2">프로</p>
+          <div class="flex items-end gap-1">
+            <span class="text-4xl font-bold font-num text-white">19,900</span>
+            <span class="text-white/70 mb-1">원/월</span>
+          </div>
+          <p class="mt-1 text-xs text-white/60">여러 현장을 동시에 관리하는 팀장님</p>
+        </div>
+        <ul class="space-y-3 flex-1 text-sm text-white/90">
+          <li class="flex items-center gap-2.5">
+            <iconify-icon icon="solar:check-circle-bold" class="text-white text-base flex-shrink-0"></iconify-icon>
+            현장 등록 <span class="font-semibold text-white">무제한</span>
+          </li>
+          <li class="flex items-center gap-2.5">
+            <iconify-icon icon="solar:check-circle-bold" class="text-white text-base flex-shrink-0"></iconify-icon>
+            알림톡 발송 <span class="font-semibold text-white">무제한</span>
+          </li>
+          <li class="flex items-center gap-2.5">
+            <iconify-icon icon="solar:check-circle-bold" class="text-white text-base flex-shrink-0"></iconify-icon>
+            수금 현황 대시보드
+          </li>
+          <li class="flex items-center gap-2.5">
+            <iconify-icon icon="solar:check-circle-bold" class="text-white text-base flex-shrink-0"></iconify-icon>
+            견적서·전자계약
+          </li>
+          <li class="flex items-center gap-2.5">
+            <iconify-icon icon="solar:check-circle-bold" class="text-white text-base flex-shrink-0"></iconify-icon>
+            증빙 저장 <span class="font-semibold text-white">무제한</span>
+          </li>
+          <li class="flex items-center gap-2.5">
+            <iconify-icon icon="solar:check-circle-bold" class="text-white text-base flex-shrink-0"></iconify-icon>
+            지출 관리 · 현장별 수지
+          </li>
+          <li class="flex items-center gap-2.5">
+            <iconify-icon icon="solar:check-circle-bold" class="text-white text-base flex-shrink-0"></iconify-icon>
+            <span><span class="font-semibold text-white">내용증명 발송</span> <span class="text-white/60 text-xs">(제휴 법무법인)</span></span>
+          </li>
+          <li class="flex items-center gap-2.5">
+            <iconify-icon icon="solar:check-circle-bold" class="text-white text-base flex-shrink-0"></iconify-icon>
+            <span>후속 법률 관리 연계 <span class="text-white/60 text-xs">(추가 비용)</span></span>
+          </li>
+        </ul>
+        <button onclick="openModal('프로')" class="mt-8 w-full py-3.5 rounded-xl bg-white text-brand-purple font-semibold text-sm hover:bg-white/90 transition">사전등록 (1개월 무료)</button>
+      </div>
+
+    </div>
+
+    <!-- 기능 비교 테이블 -->
+    <div class="mt-16 reveal">
+      <h2 class="text-2xl font-bold text-center mb-8 break-keep">플랜별 기능 비교</h2>
+      <div class="border border-slate-100 rounded-2xl overflow-hidden">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="bg-slate-50 border-b border-slate-100">
+              <th class="text-left px-6 py-4 font-semibold text-slate-700">기능</th>
+              <th class="px-4 py-4 font-semibold text-slate-700 text-center">베이직</th>
+              <th class="px-4 py-4 font-semibold text-brand-purple text-center">프로</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-50">
+            <tr class="hover:bg-slate-50/50 transition">
+              <td class="px-6 py-4 text-slate-700 break-keep">현장 등록 수</td>
+              <td class="px-4 py-4 text-center font-semibold text-slate-800">10개</td>
+              <td class="px-4 py-4 text-center font-semibold text-brand-purple">무제한</td>
+            </tr>
+            <tr class="hover:bg-slate-50/50 transition">
+              <td class="px-6 py-4 text-slate-700 break-keep">알림톡 발송 수</td>
+              <td class="px-4 py-4 text-center font-semibold text-slate-800">월 200건</td>
+              <td class="px-4 py-4 text-center font-semibold text-brand-purple">무제한</td>
+            </tr>
+            <tr class="hover:bg-slate-50/50 transition">
+              <td class="px-6 py-4 text-slate-700 break-keep">수금 현황 대시보드</td>
+              <td class="px-4 py-4 text-center"><iconify-icon icon="solar:check-circle-bold" class="text-status-success text-base"></iconify-icon></td>
+              <td class="px-4 py-4 text-center"><iconify-icon icon="solar:check-circle-bold" class="text-status-success text-base"></iconify-icon></td>
+            </tr>
+            <tr class="hover:bg-slate-50/50 transition">
+              <td class="px-6 py-4 text-slate-700 break-keep">견적서 작성</td>
+              <td class="px-4 py-4 text-center"><iconify-icon icon="solar:check-circle-bold" class="text-status-success text-base"></iconify-icon></td>
+              <td class="px-4 py-4 text-center"><iconify-icon icon="solar:check-circle-bold" class="text-status-success text-base"></iconify-icon></td>
+            </tr>
+            <tr class="hover:bg-slate-50/50 transition">
+              <td class="px-6 py-4 text-slate-700 break-keep">전자계약 서명</td>
+              <td class="px-4 py-4 text-center"><iconify-icon icon="solar:check-circle-bold" class="text-status-success text-base"></iconify-icon></td>
+              <td class="px-4 py-4 text-center"><iconify-icon icon="solar:check-circle-bold" class="text-status-success text-base"></iconify-icon></td>
+            </tr>
+            <tr class="hover:bg-slate-50/50 transition">
+              <td class="px-6 py-4 text-slate-700 break-keep">증빙 저장</td>
+              <td class="px-4 py-4 text-center text-slate-600">5GB</td>
+              <td class="px-4 py-4 text-center font-semibold text-brand-purple">무제한</td>
+            </tr>
+            <tr class="hover:bg-slate-50/50 transition">
+              <td class="px-6 py-4 text-slate-700 break-keep">지출 관리·현장별 수지</td>
+              <td class="px-4 py-4 text-center"><iconify-icon icon="solar:close-circle-bold" class="text-slate-200 text-base"></iconify-icon></td>
+              <td class="px-4 py-4 text-center"><iconify-icon icon="solar:check-circle-bold" class="text-status-success text-base"></iconify-icon></td>
+            </tr>
+            <tr class="hover:bg-slate-50/50 transition">
+              <td class="px-6 py-4 text-slate-700 break-keep">내용증명 발송 <span class="text-xs text-slate-400">(제휴 법무법인)</span></td>
+              <td class="px-4 py-4 text-center"><iconify-icon icon="solar:close-circle-bold" class="text-slate-200 text-base"></iconify-icon></td>
+              <td class="px-4 py-4 text-center"><iconify-icon icon="solar:check-circle-bold" class="text-status-success text-base"></iconify-icon></td>
+            </tr>
+            <tr class="hover:bg-slate-50/50 transition">
+              <td class="px-6 py-4 text-slate-700 break-keep">후속 법률 관리 연계 <span class="text-xs text-slate-400">(추가 비용)</span></td>
+              <td class="px-4 py-4 text-center"><iconify-icon icon="solar:close-circle-bold" class="text-slate-200 text-base"></iconify-icon></td>
+              <td class="px-4 py-4 text-center"><iconify-icon icon="solar:check-circle-bold" class="text-status-success text-base"></iconify-icon></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRICING FAQ ===== -->
+<section class="py-20 bg-surface">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
+    <h2 class="text-3xl font-bold tracking-tight text-center mb-12 break-keep">가격 관련 질문</h2>
+    <div class="space-y-3">
+
+      <div class="faq-item border border-slate-100 rounded-2xl overflow-hidden bg-white">
+        <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left font-semibold text-slate-800 hover:bg-slate-50 transition" onclick="toggleFaq(this)">
+          <span class="break-keep pr-4">사전등록 무료체험은 언제까지 사용 가능한가요?</span>
+          <iconify-icon icon="solar:alt-arrow-down-linear" class="faq-icon text-xl text-slate-400 flex-shrink-0 transition-transform duration-300"></iconify-icon>
+        </button>
+        <div class="faq-body" style="max-height:0;overflow:hidden;transition:max-height 0.35s cubic-bezier(0.16,1,0.3,1);">
+          <p class="px-6 pb-5 text-slate-500 leading-relaxed break-keep">정식 출시일로부터 1개월간 선택하신 플랜의 모든 기능을 무료로 이용 가능합니다. 무료체험 기간이 끝나면 결제를 진행하시거나 해지하실 수 있습니다.</p>
+        </div>
+      </div>
+
+      <div class="faq-item border border-slate-100 rounded-2xl overflow-hidden bg-white">
+        <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left font-semibold text-slate-800 hover:bg-slate-50 transition" onclick="toggleFaq(this)">
+          <span class="break-keep pr-4">결제는 어떻게 하나요?</span>
+          <iconify-icon icon="solar:alt-arrow-down-linear" class="faq-icon text-xl text-slate-400 flex-shrink-0 transition-transform duration-300"></iconify-icon>
+        </button>
+        <div class="faq-body" style="max-height:0;overflow:hidden;transition:max-height 0.35s cubic-bezier(0.16,1,0.3,1);">
+          <p class="px-6 pb-5 text-slate-500 leading-relaxed break-keep">카카오페이, 신용카드, 계좌이체를 지원합니다. 정식 출시 후 카카오톡 채널을 통해 간편하게 결제할 수 있습니다.</p>
+        </div>
+      </div>
+
+      <div class="faq-item border border-slate-100 rounded-2xl overflow-hidden bg-white">
+        <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left font-semibold text-slate-800 hover:bg-slate-50 transition" onclick="toggleFaq(this)">
+          <span class="break-keep pr-4">플랜을 중간에 변경할 수 있나요?</span>
+          <iconify-icon icon="solar:alt-arrow-down-linear" class="faq-icon text-xl text-slate-400 flex-shrink-0 transition-transform duration-300"></iconify-icon>
+        </button>
+        <div class="faq-body" style="max-height:0;overflow:hidden;transition:max-height 0.35s cubic-bezier(0.16,1,0.3,1);">
+          <p class="px-6 pb-5 text-slate-500 leading-relaxed break-keep">언제든 플랜을 업그레이드하거나 다운그레이드할 수 있습니다. 업그레이드 시 차액은 남은 일수에 비례해 청구되며, 위약금은 없습니다.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="py-24">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
+    <div class="relative rounded-3xl overflow-hidden p-12 md:p-16 text-center" style="background: linear-gradient(135deg, #7C3AED, #0891B2);">
+      <h2 class="text-3xl md:text-4xl font-bold text-white tracking-tight break-keep">지금 사전등록하고<br>1개월 무료체험 받으세요</h2>
+      <p class="mt-4 text-lg text-white/80 max-w-lg mx-auto break-keep">카카오톡 채널 추가 한 번이면 지금 바로 시작할 수 있습니다.</p>
+      <div class="mt-8 flex flex-wrap justify-center gap-4">
+        <a href="#" onclick="openModal(); return false;" class="px-8 py-4 rounded-2xl bg-white text-brand-purple font-semibold text-base hover:bg-white/90 transition inline-flex items-center gap-2">
+          구매하기
+          <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="py-12 border-t border-slate-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+      <div class="flex items-center gap-2.5">
+        <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-brand-purple to-brand-teal flex items-center justify-center">
+          <span class="text-white text-[10px] font-bold">톡</span>
+        </div>
+        <span class="text-sm font-bold">현장톡</span>
+        <span class="text-xs text-slate-400 ml-2">시공팀을 위한 수금 관리</span>
+      </div>
+      <div class="flex items-center gap-6 text-xs text-slate-400">
+        <a href="#" class="hover:text-slate-600 transition">이용약관</a>
+        <a href="#" class="hover:text-slate-600 transition">개인정보처리방침</a>
+        <a href="#" class="hover:text-slate-600 transition">문의하기</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== SIGNUP MODAL ===== -->
+<div id="signup-modal" class="fixed inset-0 z-50 hidden items-center justify-center">
+  <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeModal()"></div>
+  <div class="relative bg-white rounded-3xl p-8 max-w-md w-full mx-4 shadow-2xl">
+    <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition text-lg leading-none">✕</button>
+    <h3 class="text-2xl font-bold mb-2">현장톡, 지금 시작하세요</h3>
+    <p class="text-slate-500 mb-6 break-keep">100팀+ 대기 중 · 사전등록하면 출시 즉시 <strong>1개월 무료</strong> + 우선 초대</p>
+    <form class="space-y-4" onsubmit="handleModalSubmit(event)">
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">전화번호 <span class="text-brand-purple">*</span></label>
+        <input id="reg-phone" type="tel" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 outline-none transition" placeholder="010-0000-0000">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">업종</label>
+        <select id="reg-trade" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 outline-none transition text-slate-700">
+          <option value="">선택해주세요</option>
+          <option>도배</option>
+          <option>타일</option>
+          <option>목수</option>
+          <option>페인트</option>
+          <option>전기</option>
+          <option>설비</option>
+          <option>종합인테리어</option>
+          <option>기타</option>
+        </select>
+      </div>
+      <button type="submit" class="w-full btn-primary py-4 rounded-2xl text-base font-semibold text-white">사전등록 하기</button>
+    </form>
+    <p class="text-xs text-slate-400 mt-4 text-center">등록하신 번호로 출시 알림을 보내드립니다.</p>
+  </div>
+</div>
+
+<script>
+// Reveal on scroll
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+// Modal
+var selectedPlan = '';
+function openModal(plan) {
+  selectedPlan = plan || '';
+  trackEvent('form_open', {page: 'pricing', plan: selectedPlan});
+  const modal = document.getElementById('signup-modal');
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  const modal = document.getElementById('signup-modal');
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
+  document.body.style.overflow = '';
+}
+function handleModalSubmit(e) {
+  e.preventDefault();
+  var btn = e.target.querySelector('button[type="submit"]');
+  var orig = btn.textContent;
+  btn.textContent = '등록 중...'; btn.disabled = true;
+  fetch('https://script.google.com/macros/s/AKfycbx2GfpMH-crpAajMYT5nds8RkfhNq25BVwjehjn5-oZzF6g0A-brC3juDaS-T7A7abB/exec', {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify({
+      phone: document.getElementById('reg-phone').value,
+      trade: document.getElementById('reg-trade').value,
+      plan: selectedPlan
+    })
+  }).then(function() {
+      trackEvent('form_submit', {page: 'pricing', plan: selectedPlan});
+      gtag('event', 'conversion', {'send_to': 'AW-18055785683/YA6-CODFmpQcENPZ1aFD'});
+      alert('사전등록이 완료되었습니다! 출시 시 알림을 보내드리겠습니다.');
+      e.target.reset();
+      closeModal();
+    })
+    .catch(function() { alert('오류가 발생했습니다. 다시 시도해주세요.'); })
+    .finally(function() { btn.textContent = orig; btn.disabled = false; });
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeModal();
+});
+
+// FAQ accordion
+function toggleFaq(trigger) {
+  const item = trigger.closest('.faq-item');
+  const body = item.querySelector('.faq-body');
+  const icon = trigger.querySelector('.faq-icon');
+  const isOpen = body.style.maxHeight && body.style.maxHeight !== '0px';
+  document.querySelectorAll('.faq-item').forEach(function(fi) {
+    fi.querySelector('.faq-body').style.maxHeight = '0px';
+    fi.querySelector('.faq-icon').style.transform = '';
+    fi.querySelector('.faq-trigger').classList.remove('bg-slate-50');
+  });
+  if (!isOpen) {
+    body.style.maxHeight = body.scrollHeight + 'px';
+    icon.style.transform = 'rotate(180deg)';
+    trigger.classList.add('bg-slate-50');
+  }
+}
+
+// === Unified Event Tracking ===
+function trackEvent(eventName, params) {
+  params = params || {};
+  // GA4 — use recommended event names
+  if (typeof gtag === 'function') {
+    if (eventName === 'form_submit') {
+      gtag('event', 'generate_lead', { currency: 'KRW', value: 0, plan: params.plan || '' });
+    } else {
+      gtag('event', eventName, params);
+    }
+  }
+  // Meta Pixel — standard events for optimization, custom for funnel
+  if (typeof fbq === 'function') {
+    if (eventName === 'form_submit') {
+      fbq('track', 'Lead', { content_name: params.plan || '', content_category: params.page || '' });
+    } else {
+      fbq('trackCustom', eventName, params);
+    }
+  }
+  // Kakao Pixel — tag must be string
+  if (typeof kakaoPixel === 'function') {
+    if (eventName === 'form_submit') kakaoPixel('8295254996672491685').completeRegistration(params.plan || '');
+    else kakaoPixel('8295254996672491685').participation(eventName + (params.source ? '_' + params.source : ''));
+  }
+  // Naver (uncomment when ready)
+  // if (typeof wcs === 'object' && wcs.trans) { var _c={}; _c.type='lead'; wcs.trans(_c); }
+}
+</script>
+
+</body>
+</html>
